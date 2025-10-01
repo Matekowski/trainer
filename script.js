@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayScenario(currentScenario);
     }
 
-    // 3. NOWA funkcja do wyświetlania danych na STOLE
+    // 3. Funkcja do wyświetlania danych na STOLE
     function displayScenario(scenario) {
         scenarioDisplay.classList.remove('hidden');
         feedbackBox.classList.add('hidden');
@@ -61,8 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const img = document.createElement('img');
                     const holeCards = scenario.holeCardsCount || 0;
                     
+                    // ZMIANA TUTAJ: Użycie 'card_back.png' dla kart zakrytych gracza
                     if (index < holeCards) {
-                        img.src = 'assets/images/cards/back.png';
+                        img.src = 'assets/images/cards/card_back.png';
                     } else {
                         img.src = `assets/images/cards/${cardName}.png`;
                     }
@@ -76,8 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
             scenario.opponentHand.forEach((cardName, index) => {
                 if (index < opponentCardSlots.length && cardName) { // Sprawdza czy cardName nie jest pusty
                     const img = document.createElement('img');
+
+                    // ZMIANA TUTAJ: Użycie 'card_back.png' dla kart zakrytych przeciwnika
                     if (cardName === '?') {
-                        img.src = 'assets/images/cards/back.png';
+                        img.src = 'assets/images/cards/card_back.png';
                     } else {
                         img.src = `assets/images/cards/${cardName}.png`;
                     }
