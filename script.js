@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Wypełnij listę gier na podstawie bazy
     function populateGameVariants() {
-        const variants = [...new Set(scenarios.map(s => s.gameVariant))]; // Unikalne nazwy gier
+        const variants = [...new Set(scenarios.map(s => s.gameVariant))];
         variants.forEach(variant => {
             const option = document.createElement('option');
             option.value = variant;
@@ -35,17 +35,70 @@ document.addEventListener('DOMContentLoaded', () => {
         displayScenario(currentScenario);
     }
 
-    // 3. Funkcja do wyświetlania danych na stronie
+    // 3. NOWA funkcja do wyświetlania danych na STOLE
     function displayScenario(scenario) {
         scenarioDisplay.classList.remove('hidden');
         feedbackBox.classList.add('hidden');
 
+        // Wypełnij dane tekstowe
+        document.getElementById('pot-size').textContent = scenario.potSize;
         document.getElementById('scenario-title').textContent = scenario.title;
         document.getElementById('scenario-description').textContent = scenario.description;
-        document.getElementById('pot-size').textContent = scenario.potSize;
-        document.getElementById('hero-hand').textContent = scenario.heroHand;
-        document.getElementById('board-cards').textContent = scenario.board;
         document.getElementById('action-history').textContent = scenario.actionHistory;
+
+        // Pobierz wszystkie miejsca na karty
+        const heroCardSlots = document.querySelectorAll('.hero .card-slot');
+        const opponentCardSlots = document.querySelectorAll('.opponent .card-slot');
+        const boardCardSlots = document.querySelectorAll('.board .card-slot'); // Jeśli dodasz board w HTML
+
+        // Wyczyść wszystkie miejsca na karty
+        [...heroCardSlots, ...opponentCardSlots, ...boardCardSlots].forEach(slot => slot.innerHTML = '');
+
+        // Wyświetl karty gracza (hero)
+        if (scenario.heroHand && scenario.heroHand.length > 0) {
+            scenario.heroHand.forEach((cardName, index) => {
+                if (index < heroCardSlots.length) {
+                    const img = document.createElement('img');
+                    const holeCards = scenario.holeCardsCount || 0;
+                    
+                    if (index < holeCards) {
+                        img.src = 'assets/images/cards/back.png';
+                    } else {
+                        img.src = `assets/images/cards/${cardName}.png`;
+                    }
+                    heroCardSlots[index].appendChild(img);
+                }
+            });
+        }
+
+        // Wyświetl karty przeciwnika
+        if (scenario.opponentHand && scenario.opponentHand.length > 0) {
+            scenario.opponentHand.forEach((cardName, index) => {
+                if (index < opponentCardSlots.length && cardName) { // Sprawdza czy cardName nie jest pusty
+                    const img = document.createElement('img');
+                    if (cardName === '?') {
+                        img.src = 'assets/images/cards/back.png';
+                    } else {
+                        img.src = `assets/images/cards/${cardName}.png`;
+                    }
+                    opponentCardSlots[index].appendChild(img);
+                }
+            });
+        }
+        
+        // Wyświetl karty na stole (board) dla gier typu Hold'em/Omaha
+        if (scenario.board && scenario.board.length > 0) {
+             // W HTML musiałbyś dodać div dla boardu, aby to zadziałało
+             // Na razie ten kod nie zostanie użyty, dopóki nie dodasz .board .card-slot
+             scenario.board.forEach((cardName, index) => {
+                if(index < boardCardSlots.length) {
+                    const img = document.createElement('img');
+                    img.src = `assets/images/cards/${cardName}.png`;
+                    boardCardSlots[index].appendChild(img);
+                }
+             });
+        }
+
 
         // Wyczyść i stwórz przyciski decyzji
         decisionButtonsContainer.innerHTML = '';
@@ -57,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Funkcja do sprawdzania odpowiedzi
+    // 4. Funkcja do sprawdzania odpowiedzi (bez zmian)
     function checkAnswer(userChoice) {
         if (!currentScenario) return;
 
@@ -74,5 +127,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Uruchomienie
     populateGameVariants();
     generateBtn.addEventListener('click', generateScenario);
-    
 });
