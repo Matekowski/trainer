@@ -19,22 +19,47 @@
         </div>
 
         <div id="scenario-display" class="hidden">
-            <h2 id="scenario-title"></h2>
-            <p id="scenario-description"></p>
-            
-            <div class="game-state">
-                <p><strong>Pula:</strong> <span id="pot-size"></span></p>
-                <p><strong>Twoje karty:</strong> <span id="hero-hand"></span></p>
-                <p><strong>Karty na stole:</strong> <span id="board-cards"></span></p>
-            </div>
-            
-            <p><strong>Przebieg akcji:</strong></p>
-            <p id="action-history"></p>
+            <div class="poker-table">
 
-            <p><strong>Twoja decyzja?</strong></p>
-            <div id="decision-buttons" class="decision-buttons">
+                <div class="pot-area">
+                    Pula: <span id="pot-size"></span>
                 </div>
-            
+
+                <div class="player-area opponent">
+                    <div class="player-name">Przeciwnik</div>
+                    <div class="cards-container">
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                    </div>
+                </div>
+
+                <div class="player-area hero">
+                    <div class="player-name">Twoje karty</div>
+                    <div class="cards-container">
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                        <div class="card-slot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-info">
+                <h2 id="scenario-title"></h2>
+                <p id="scenario-description"></p>
+                <p><strong>Przebieg akcji:</strong> <span id="action-history"></span></p>
+                <p><strong>Twoja decyzja?</strong></p>
+                <div id="decision-buttons" class="decision-buttons"></div>
+            </div>
+
             <div id="feedback" class="feedback hidden">
                 <p id="feedback-text"></p>
             </div>
