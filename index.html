@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Pytań Quizowych</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Generator Pytań do Gry</h1>
+            <p>Wybierz kategorię, a następnie postaraj się wymienić jak najwięcej odpowiedzi na wylosowane pytanie!</p>
+        </header>
+
+        <main>
+            <section id="category-selector">
+                <h2>Wybierz kategorię:</h2>
+                <div class="buttons-grid">
+                    <button class="category-btn" data-category="wszystko">Wszystko</button>
+                    <button class="category-btn" data-category="geografia">Geografia</button>
+                    <button class="category-btn" data-category="pilka_nozna">Piłka Nożna</button>
+                    <button class="category-btn" data-category="biologia">Biologia</button>
+                    <button class="category-btn" data-category="dla_kobiet">Dla Kobiet</button>
+                    <button class="category-btn" data-category="polityka">Polityka</button>
+                </div>
+            </section>
+
+            <section id="question-display">
+                <h2>Wylosowane pytanie:</h2>
+                <div id="question-box">
+                    <p id="question-text">Tutaj pojawi się Twoje pytanie...</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Stworzone na podstawie Twojego pomysłu! Miłej zabawy!</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
