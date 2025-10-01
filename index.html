@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Trainer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="trainer-container">
+        <h1>Poker Trainer</h1>
+        <p>Wybierz wariant gry i wylosuj scenariusz, aby podjąć decyzję.</p>
+
+        <div class="controls">
+            <select id="game-variant-select">
+                </select>
+            <button id="generate-scenario-btn">Losuj Scenariusz</button>
+        </div>
+
+        <div id="scenario-display" class="hidden">
+            <h2 id="scenario-title"></h2>
+            <p id="scenario-description"></p>
+            
+            <div class="game-state">
+                <p><strong>Pula:</strong> <span id="pot-size"></span></p>
+                <p><strong>Twoje karty:</strong> <span id="hero-hand"></span></p>
+                <p><strong>Karty na stole:</strong> <span id="board-cards"></span></p>
+            </div>
+            
+            <p><strong>Przebieg akcji:</strong></p>
+            <p id="action-history"></p>
+
+            <p><strong>Twoja decyzja?</strong></p>
+            <div id="decision-buttons" class="decision-buttons">
+                </div>
+            
+            <div id="feedback" class="feedback hidden">
+                <p id="feedback-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scenarios.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
