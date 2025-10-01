@@ -1,44 +1,78 @@
 document.addEventListener('DOMContentLoaded', () => {
-const scenarios = [
-    {
-        id: 1,
-        gameVariant: "No-Limit Hold'em",
-        title: "Pre-flop: Obrona Blinda",
-        description: "Jesteś na Big Blindzie. Gracz na pozycji Cutoff (agresywny) otwiera za 2.5BB. Wszyscy do Ciebie pasują. Masz 100BB stacka.",
-        potSize: "3.5 BB",
-        heroHand: "A♦️ 9♣️",
-        board: "Brak",
-        actionHistory: "Cutoff podbija do 2.5 BB. Button pasuje. Small Blind pasuje.",
-        options: ["Spasuj", "Sprawdź", "3-bet do 9 BB"],
-        correctAnswer: "3-bet do 9 BB",
-        explanation: "Poprawna odpowiedź to 3-bet. A9s jest zbyt silne na sam call z tej pozycji przeciwko agresywnemu graczowi z Cutoff. 3-bet pozwala przejąć inicjatywę i często wygrać pulę od razu."
-    },
-    {
-        id: 2,
-        gameVariant: "No-Limit Hold'em",
-        title: "Turn: Scare card",
-        description: "Gra cashowa, stacki po 100BB. Podbiłeś pre-flop z UTG, jeden gracz sprawdził na Buttonie.",
-        potSize: "17.5 BB",
-        heroHand: "K♠️ K♦️",
-        board: "J♠️ 8♣️ 3❤️ A♠️",
-        actionHistory: "Na flopie (J-8-3) zabetowałeś, a przeciwnik sprawdził. Na turnie spada As.",
-        options: ["Check", "Bet 1/3 puli", "Bet 2/3 puli"],
-        correctAnswer: "Check",
-        explanation: "Poprawna odpowiedź to check. As jest 'straszną kartą' (scare card), która trafia w dużą część zakresu przeciwnika, który sprawdzał na flopie. Dalsze betowanie byłoby ryzykowne. Check pozwala na kontrolę puli i ewentualne złapanie blefu."
-    },
-    {
-        id: 3,
-        gameVariant: "Stud8 (Hi-Lo)",
-        title: "Third Street: Startowa ręka",
-        description: "Otrzymujesz pierwsze trzy karty. Jesteś na środkowej pozycji.",
-        potSize: "Zmienna (zależna od ante)",
-        heroHand: "(A♠️ 2♠️) 3♠️", // W nawiasie karty zakryte
-        board: "Twoja odkryta karta to 3♠️. U przeciwników widzisz: K♦️, 7♣️, Q❤️.",
-        actionHistory: "Gracz z najniższą kartą (bring-in) wpłacił obowiązkowy zakład. Akcja dochodzi do Ciebie.",
-        options: ["Spasuj", "Uzupełnij (Complete)", "Sprawdź (jeśli można)"],
-        correctAnswer: "Uzupełnij (Complete)",
-        explanation: "Poprawna odpowiedź to uzupełnienie (podbicie). Masz trzy karty do koloru, strita i najlepszego możliwego układu low (A-2-3). To jest premium ręka startowa w Stud8, którą należy rozgrywać agresywnie."
-    }
-    // ... dodaj więcej scenariuszy dla różnych gier!
 
+    // Referencje do elementów HTML
+    const gameSelect = document.getElementById('game-variant-select');
+    const generateBtn = document.getElementById('generate-scenario-btn');
+    const scenarioDisplay = document.getElementById('scenario-display');
+    const feedbackBox = document.getElementById('feedback');
+    const feedbackText = document.getElementById('feedback-text');
+    const decisionButtonsContainer = document.getElementById('decision-buttons');
+
+    let currentScenario = null;
+
+    // 1. Wypełnij listę gier na podstawie bazy
+    function populateGameVariants() {
+        const variants = [...new Set(scenarios.map(s => s.gameVariant))]; // Unikalne nazwy gier
+        variants.forEach(variant => {
+            const option = document.createElement('option');
+            option.value = variant;
+            option.textContent = variant;
+            gameSelect.appendChild(option);
+        });
+    }
+
+    // 2. Funkcja do generowania i wyświetlania scenariusza
+    function generateScenario() {
+        const selectedVariant = gameSelect.value;
+        const possibleScenarios = scenarios.filter(s => s.gameVariant === selectedVariant);
+        
+        if (possibleScenarios.length === 0) {
+            alert("Brak scenariuszy dla tej gry!");
+            return;
+        }
+
+        currentScenario = possibleScenarios[Math.floor(Math.random() * possibleScenarios.length)];
+        displayScenario(currentScenario);
+    }
+
+    // 3. Funkcja do wyświetlania danych na stronie
+    function displayScenario(scenario) {
+        scenarioDisplay.classList.remove('hidden');
+        feedbackBox.classList.add('hidden');
+
+        document.getElementById('scenario-title').textContent = scenario.title;
+        document.getElementById('scenario-description').textContent = scenario.description;
+        document.getElementById('pot-size').textContent = scenario.potSize;
+        document.getElementById('hero-hand').textContent = scenario.heroHand;
+        document.getElementById('board-cards').textContent = scenario.board;
+        document.getElementById('action-history').textContent = scenario.actionHistory;
+
+        // Wyczyść i stwórz przyciski decyzji
+        decisionButtonsContainer.innerHTML = '';
+        scenario.options.forEach(optionText => {
+            const button = document.createElement('button');
+            button.textContent = optionText;
+            button.addEventListener('click', () => checkAnswer(optionText));
+            decisionButtonsContainer.appendChild(button);
+        });
+    }
+
+    // 4. Funkcja do sprawdzania odpowiedzi
+    function checkAnswer(userChoice) {
+        if (!currentScenario) return;
+
+        if (userChoice === currentScenario.correctAnswer) {
+            feedbackText.innerHTML = `<strong>Dobrze!</strong> ${currentScenario.explanation}`;
+            feedbackBox.className = 'feedback correct';
+        } else {
+            feedbackText.innerHTML = `<strong>Niepoprawnie.</strong> Prawidłowa odpowiedź to: "${currentScenario.correctAnswer}".<br><br><strong>Wyjaśnienie:</strong> ${currentScenario.explanation}`;
+            feedbackBox.className = 'feedback incorrect';
+        }
+        feedbackBox.classList.remove('hidden');
+    }
+
+    // Uruchomienie
+    populateGameVariants();
+    generateBtn.addEventListener('click', generateScenario);
+    
 });
