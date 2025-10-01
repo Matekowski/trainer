@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 const scenarios = [
     {
         id: 1,
@@ -39,4 +40,5 @@ const scenarios = [
         explanation: "Poprawna odpowiedź to uzupełnienie (podbicie). Masz trzy karty do koloru, strita i najlepszego możliwego układu low (A-2-3). To jest premium ręka startowa w Stud8, którą należy rozgrywać agresywnie."
     }
     // ... dodaj więcej scenariuszy dla różnych gier!
-];
+
+});
